@@ -77,17 +77,17 @@ def create_endpoint(project, region, endpoint_display_name):
         project=project,
         location=region
     )
-    
+
     endpoints = vertex_ai.Endpoint.list(
         filter=f'display_name={endpoint_display_name}', 
         order_by="update_time")
-    
+
     if len(endpoints) > 0:
         logging.info(f"Endpoint {endpoint_display_name} already exists.")
         endpoint = endpoints[-1]
     else:
         endpoint = vertex_ai.Endpoint.create(endpoint_display_name)
-    logging.info(f"Endpoint is ready.")
+    logging.info("Endpoint is ready.")
     logging.info(endpoint.gca_resource)
     return endpoint
 
@@ -98,19 +98,19 @@ def deploy_model(project, region, endpoint_display_name, model_display_name, ser
         project=project,
         location=region
     )
-    
+
     model = vertex_ai.Model.list(
         filter=f'display_name={model_display_name}',
         order_by="update_time"
     )[-1]
-    
+
     endpoint = vertex_ai.Endpoint.list(
         filter=f'display_name={endpoint_display_name}',
         order_by="update_time"
     )[-1]
 
     deployed_model = endpoint.deploy(model=model, **serving_resources_spec)
-    logging.info(f"Model is deployed.")
+    logging.info("Model is deployed.")
     logging.info(deployed_model)
     return deployed_model
 
@@ -118,8 +118,7 @@ def deploy_model(project, region, endpoint_display_name, model_display_name, ser
 def compile_pipeline(pipeline_name):
     from src.tfx_pipelines import runner
     pipeline_definition_file = f"{pipeline_name}.json"
-    pipeline_definition = runner.compile_training_pipeline(pipeline_definition_file)
-    return pipeline_definition
+    return runner.compile_training_pipeline(pipeline_definition_file)
 
     
 

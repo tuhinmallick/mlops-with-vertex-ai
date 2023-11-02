@@ -18,7 +18,7 @@ from google.cloud import aiplatform as vertex_ai
 
 
 def _get_source_query(bq_dataset_name, bq_table_name, ml_use, limit=None):
-    query = f"""
+    query = """
     SELECT 
         IF(trip_month IS NULL, -1, trip_month) trip_month,
         IF(trip_day IS NULL, -1, trip_day) trip_day,

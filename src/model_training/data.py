@@ -35,7 +35,7 @@ def get_dataset(file_pattern, feature_spec, batch_size=200):
         dictionary of Tensors, and indices is a single Tensor of label indices.
     """
 
-    dataset = tf.data.experimental.make_batched_features_dataset(
+    return tf.data.experimental.make_batched_features_dataset(
         file_pattern=file_pattern,
         batch_size=batch_size,
         features=feature_spec,
@@ -44,5 +44,3 @@ def get_dataset(file_pattern, feature_spec, batch_size=200):
         num_epochs=1,
         drop_final_batch=True,
     )
-
-    return dataset

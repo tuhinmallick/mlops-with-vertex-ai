@@ -92,7 +92,7 @@ def test_transform_pipeline():
 
     logging.info(f"Transform pipeline args: {args}")
     etl.run_transform_pipeline(args)
-    logging.info(f"Transform pipeline finished.")
+    logging.info("Transform pipeline finished.")
 
     tft_output = tft.TFTransformOutput(transform_artifacts_dir)
     transform_feature_spec = tft_output.transformed_feature_spec()
