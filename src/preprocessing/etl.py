@@ -30,10 +30,7 @@ RAW_SCHEMA_LOCATION = "src/raw_schema/schema.pbtxt"
 
 
 def parse_bq_record(bq_record):
-    output = {}
-    for key in bq_record:
-        output[key] = [bq_record[key]]
-    return output
+    return {key: [bq_record[key]] for key in bq_record}
 
 
 def split_dataset(bq_row, num_partitions, ratio):
@@ -158,9 +155,7 @@ def run_transform_pipeline(args):
 def convert_to_jsonl(bq_record):
     import json
 
-    output = {}
-    for key in bq_record:
-        output[key] = [bq_record[key]]
+    output = {key: [bq_record[key]] for key in bq_record}
     return json.dumps(output)
 
 

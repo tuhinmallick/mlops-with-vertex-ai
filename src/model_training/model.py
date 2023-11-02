@@ -27,8 +27,6 @@ def create_model_inputs():
             inputs[name] = keras.layers.Input(name=name, shape=[], dtype=tf.float32)
         elif feature_name in features.categorical_feature_names():
             inputs[name] = keras.layers.Input(name=name, shape=[], dtype=tf.int64)
-        else:
-            pass
     return inputs
 
 
@@ -58,9 +56,6 @@ def _create_binary_classifier(feature_vocab_sizes, hyperparams):
         elif feature_name in features.NUMERICAL_FEATURE_NAMES:
             numeric_layer = tf.expand_dims(input_layers[key], -1)
             layers.append(numeric_layer)
-        else:
-            pass
-
     joined = keras.layers.Concatenate(name="combines_inputs")(layers)
     feedforward_output = keras.Sequential(
         [
@@ -71,8 +66,7 @@ def _create_binary_classifier(feature_vocab_sizes, hyperparams):
     )(joined)
     logits = keras.layers.Dense(units=1, name="logits")(feedforward_output)
 
-    model = keras.Model(inputs=input_layers, outputs=[logits])
-    return model
+    return keras.Model(inputs=input_layers, outputs=[logits])
 
 
 def create_binary_classifier(tft_output, hyperparams):
